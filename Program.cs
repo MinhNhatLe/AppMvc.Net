@@ -1,10 +1,19 @@
 using App.ExtendMethods;
+using App.Models;
 using App.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+var connectionString = builder.Configuration.GetConnectionString("AppMvcConnectionString");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
 // Add services to the container.
+builder.Services.AddControllers();
 
 // này controller vào view
 builder.Services.AddControllersWithViews();
