@@ -1,9 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using App.ExtendMethods;
 using App.Models;
 using App.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +33,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllers();
 
-// n�y controller v�o view
+// này controller vào view
 builder.Services.AddControllersWithViews();
-//n�y controller v�o razorpages
+//này controller vào razorpages
 builder.Services.AddRazorPages();
 
+
+builder.Services.AddSession(); // Đảm bảo rằng bạn đã thêm dịch vụ phiên
 
 // builder.Services.AddTransient(typeof(ILogger<>), typeof(Logger<>)); //Serilog
 builder.Services.Configure<RazorViewEngineOptions>(options =>
@@ -39,6 +59,77 @@ builder.Services.Configure<RazorViewEngineOptions>(options =>
 // builder.Services.AddSingleton(typeof(ProductService));
 builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
 builder.Services.AddSingleton<PlanetService>();
+
+
+// Dang ky Identity
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
+
+
+// Truy cập IdentityOptions
+builder.Services.Configure<IdentityOptions>(options => {
+    // Thiết lập về Password
+    options.Password.RequireDigit = false; // Không bắt phải có số
+    options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
+    options.Password.RequireNonAlphanumeric = false; // Không bắt ký tự đặc biệt
+    options.Password.RequireUppercase = false; // Không bắt buộc chữ in
+    options.Password.RequiredLength = 3; // Số ký tự tối thiểu của password
+    options.Password.RequiredUniqueChars = 1; // Số ký tự riêng biệt
+
+    // Cấu hình Lockout - khóa user
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
+    options.Lockout.MaxFailedAccessAttempts = 3; // Thất bại 3 lầ thì khóa
+    options.Lockout.AllowedForNewUsers = true;
+
+    // Cấu hình về User.
+    options.User.AllowedUserNameCharacters = // các ký tự đặt tên user
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = true;  // Email là duy nhất
+
+
+    // Cấu hình đăng nhập.
+    options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
+    options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
+    options.SignIn.RequireConfirmedAccount = true;
+
+});
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = "/login/";
+    options.LogoutPath = "/logout/";
+    options.AccessDeniedPath = "/khongduoctruycap.html";
+});
+builder.Services.AddAuthentication()
+.AddGoogle(options => {
+                        var gconfig = builder.Configuration.GetSection("Authentication:Google");
+                        options.ClientId = gconfig["ClientId"];
+                        options.ClientSecret = gconfig["ClientSecret"];
+                        // https://localhost:5001/signin-google
+                        options.CallbackPath = "/dang-nhap-tu-google";
+                    })
+                    .AddFacebook(options => {
+                        var fconfig = builder.Configuration.GetSection("Authentication:Facebook");
+                        options.AppId = fconfig["AppId"];
+                        options.AppSecret = fconfig["AppSecret"];
+                        options.CallbackPath = "/dang-nhap-tu-facebook";
+                    })
+                    // .AddTwitter()
+                    // .AddMicrosoftAccount()
+                    ;
+
+//builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+
+//builder.Services.AddAuthorization(options => {
+//    options.AddPolicy("ViewManageMenu", builder => {
+//        builder.RequireAuthenticatedUser();
+//        builder.RequireRole(RoleName.Administrator);
+//    });
+//});
+
+
+
+
+
 
 var app = builder.Build();
 
