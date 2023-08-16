@@ -27,6 +27,7 @@
     <Folder Include="Areas\Database\Controllers\" />
     <Folder Include="Areas\Database\Data\" />
     <Folder Include="Areas\Database\Models\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

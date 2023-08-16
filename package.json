@@ -1,0 +1,19 @@
+{
+  "name": "appmvc.net",
+  "version": "1.0.0",
+  "description": "appmvc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinhNhatLe/AppMvc.Net.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MinhNhatLe/AppMvc.Net/issues"
+  },
+  "homepage": "https://github.com/MinhNhatLe/AppMvc.Net#readme"
+}

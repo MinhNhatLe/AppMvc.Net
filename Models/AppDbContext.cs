@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using App.Models.Contacts;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Models
 {
@@ -28,5 +29,7 @@ namespace App.Models
             // }
 
         }
+
+        public DbSet<Contact> Contacts { get; set; }
     }
 }
