@@ -39,10 +39,48 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Contact\Data\" />
+    <Folder Include="Areas\Contact\Models\" />
+    <Folder Include="Areas\Contact\Views\DbManage\" />
     <Folder Include="Areas\Database\Controllers\" />
     <Folder Include="Areas\Database\Data\" />
     <Folder Include="Areas\Database\Models\" />
+    <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="mailssave\" />
     <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Contact\Views\Contact\Delete.cshtml" />
+    <None Include="Areas\Contact\Views\Contact\Details.cshtml" />
+    <None Include="Areas\Contact\Views\Contact\Index.cshtml" />
+    <None Include="Areas\Contact\Views\Contact\SendContact.cshtml" />
+    <None Include="Areas\Contact\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Contact\Views\_ViewStart.cshtml" />
+    <None Include="Areas\Database\Views\DbManage\DeleteDb.cshtml" />
+    <None Include="Areas\Database\Views\DbManage\Index.cshtml" />
+    <None Include="Areas\Database\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Database\Views\_ViewStart.cshtml" />
+    <None Include="Areas\ProductManage\Views\Product\Index.cshtml" />
+    <None Include="Areas\ProductManage\Views\_ViewImports.cshtml" />
+    <None Include="Areas\ProductManage\Views\_ViewStart.cshtml" />
+    <None Include="Views\First\HelloView.cshtml" />
+    <None Include="Views\First\ViewProduct.cshtml" />
+    <None Include="Views\First\ViewProduct2.cshtml" />
+    <None Include="Views\First\ViewProduct3.cshtml" />
+    <None Include="Views\First\xinchao2.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Planet\Detail.cshtml" />
+    <None Include="Views\Planet\Index.cshtml" />
+    <None Include="Views\Product\Index.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_AlertMessage.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_MenuManagePartial.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
 
 </Project>

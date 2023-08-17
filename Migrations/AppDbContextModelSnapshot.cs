@@ -45,7 +45,6 @@ namespace AppMvc.Net.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("HomeAdress")
-                        .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 

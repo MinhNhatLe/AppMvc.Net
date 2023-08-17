@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using App.Data;
 using App.ExtendMethods;
 using App.Models;
 using App.Services;
@@ -29,6 +30,12 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AppMvcConnectionString");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+// dang ky dich vu email
+builder.Services.AddOptions();
+var mailsetting = builder.Configuration.GetSection("MailSettings");
+builder.Services.Configure<MailSettings>(mailsetting);
+builder.Services.AddSingleton<IEmailSender, SendMailService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -79,7 +86,7 @@ builder.Services.Configure<IdentityOptions>(options => {
 
     // Cấu hình Lockout - khóa user
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
-    options.Lockout.MaxFailedAccessAttempts = 3; // Thất bại 3 lầ thì khóa
+    options.Lockout.MaxFailedAccessAttempts = 3; // Thất bại 3 lần thì khóa
     options.Lockout.AllowedForNewUsers = true;
 
     // Cấu hình về User.
@@ -117,14 +124,19 @@ builder.Services.AddAuthentication()
                     // .AddMicrosoftAccount()
                     ;
 
-//builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 
-//builder.Services.AddAuthorization(options => {
-//    options.AddPolicy("ViewManageMenu", builder => {
-//        builder.RequireAuthenticatedUser();
-//        builder.RequireRole(RoleName.Administrator);
-//    });
-//});
+// cấu hình menu cho User quản trị
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ViewManageMenu", builder =>
+    {
+        // user phải đăng nhập
+        builder.RequireAuthenticatedUser();
+        // user phải có vai trò là Administrator
+        builder.RequireRole(RoleName.Administrator);
+    });
+});
 
 
 
