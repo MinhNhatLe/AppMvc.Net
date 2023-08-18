@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -156,7 +157,19 @@ var app = builder.Build();
     app.UseHttpsRedirection();
     app.UseStaticFiles();
 
-    app.AddStatusCodePage(); // Tuy bien Response loi: 400 - 599
+// cấu hình  cho file Uploads thành file tĩnh
+    // /contents/1.jpg => Uploads/1.jpg
+    app.UseStaticFiles(new StaticFileOptions()
+    {
+        FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "Uploads")
+        ),
+        RequestPath = "/contents"
+    });
+
+
+
+app.AddStatusCodePage(); // Tuy bien Response loi: 400 - 599
 
     app.UseRouting();// EndpointRoutingMiddleware
 

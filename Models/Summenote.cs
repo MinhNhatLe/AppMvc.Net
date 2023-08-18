@@ -21,7 +21,7 @@
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
+                ['insert', ['link', 'picture', 'video', 'elfinder']],
                 ['height', ['height']],
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]       
