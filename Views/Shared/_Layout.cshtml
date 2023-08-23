@@ -29,6 +29,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Blog" asp-controller="ViewPost" asp-action="Index">Blog</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Product" asp-controller="ViewProduct" asp-action="Index">Sản phẩm</a>
+                        </li>
                         @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -46,7 +49,8 @@
                         </li>
                     </ul>
 
-
+                    @*@await Html.PartialAsync("_CartPartial")*@
+                    @*<partial name="_CartPartial" />*@
                     <partial name="_LoginPartial" />
                     <partial name="_MenuManagePartial" />
 

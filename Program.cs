@@ -32,6 +32,15 @@ var connectionString = builder.Configuration.GetConnectionString("AppMvcConnecti
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// đăng kí dịch vụ cho chức năng giỏ hàng
+builder.Services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+builder.Services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+    cfg.Cookie.Name = "appmvc";                 // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+    cfg.IdleTimeout = new TimeSpan(0, 30, 0);    // Thời gian tồn tại của Session
+});
+
+
+
 // dang ky dich vu email
 builder.Services.AddOptions();
 var mailsetting = builder.Configuration.GetSection("MailSettings");
@@ -59,13 +68,15 @@ builder.Services.Configure<RazorViewEngineOptions>(options =>
     // {1} -> ten Controller
     // {2} -> ten Area
     options.ViewLocationFormats.Add("/MyView/{1}/{0}" + RazorViewEngine.ViewExtension);
+
+    options.AreaViewLocationFormats.Add("/MyAreas/{2}/Views/{1}/{0}.cshtml");
 });
 
 
 // builder.Services.AddSingleton<ProductService>();
 // builder.Services.AddSingleton<ProductService, ProductService>();
 // builder.Services.AddSingleton(typeof(ProductService));
-builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
+//builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
 builder.Services.AddSingleton<PlanetService>();
 
 
@@ -139,8 +150,8 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
-
-
+// đăng kí dịch vụ cho chức năng giỏ hàng
+builder.Services.AddTransient<CartService>();
 
 
 
@@ -169,7 +180,9 @@ var app = builder.Build();
 
 
 
-app.AddStatusCodePage(); // Tuy bien Response loi: 400 - 599
+    app.UseSession();    
+
+    app.AddStatusCodePage(); // Tuy bien Response loi: 400 - 599
 
     app.UseRouting();// EndpointRoutingMiddleware
 

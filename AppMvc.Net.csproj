@@ -9,6 +9,7 @@
   <ItemGroup>
     <Content Remove="Areas\Files\Views\_ViewImports.cshtml" />
     <Content Remove="Areas\Files\Views\_ViewStart.cshtml" />
+    <Content Remove="Views\Shared\_CartPartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -105,6 +106,7 @@
     <Folder Include="Areas\Database\Models\" />
     <Folder Include="Areas\Identity\Data\" />
     <Folder Include="mailssave\" />
+    <Folder Include="Uploads\Uploads\" />
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
@@ -121,20 +123,12 @@
     <None Include="Areas\Database\Views\_ViewStart.cshtml" />
     <None Include="Areas\Files\Views\_ViewImports.cshtml" />
     <None Include="Areas\Files\Views\_ViewStart.cshtml" />
-    <None Include="Areas\ProductManage\Views\Product\Index.cshtml" />
-    <None Include="Areas\ProductManage\Views\_ViewImports.cshtml" />
-    <None Include="Areas\ProductManage\Views\_ViewStart.cshtml" />
-    <None Include="Views\First\HelloView.cshtml" />
-    <None Include="Views\First\ViewProduct.cshtml" />
-    <None Include="Views\First\ViewProduct2.cshtml" />
-    <None Include="Views\First\ViewProduct3.cshtml" />
-    <None Include="Views\First\xinchao2.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Planet\Detail.cshtml" />
     <None Include="Views\Planet\Index.cshtml" />
-    <None Include="Views\Product\Index.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_CartPartial.cshtml" />
     <None Include="Views\Shared\_AlertMessage.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_MenuManagePartial.cshtml" />
